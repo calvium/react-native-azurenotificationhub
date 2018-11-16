@@ -29,7 +29,7 @@
 		848CB73C16FCC78E00183E8D /* SBStoredRegistrationEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = 848CB73A16FCC78E00183E8D /* SBStoredRegistrationEntry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		848CB73D16FCC78E00183E8D /* SBStoredRegistrationEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 848CB73B16FCC78E00183E8D /* SBStoredRegistrationEntry.m */; };
 		906E403C16A86A3200817A11 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 906E403B16A86A3200817A11 /* Foundation.framework */; };
-		906E406216A86E4300817A11 /* WindowsAzureMessaging.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 906E404016A86A3200817A11 /* WindowsAzureMessaging.h */; };
+		906E406216A86E4300817A11 /* WindowsAzureMessaging.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 906E404016A86A3200817A11 /* WindowsAzureMessaging.h */; };
 		929886F01857FAB100C1676C /* SBStaticHandlerResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 929886EF1857FAB100C1676C /* SBStaticHandlerResponse.h */; };
 		92988748185931DE00C1676C /* SBStaticHandlerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 92988747185931DE00C1676C /* SBStaticHandlerResponse.m */; };
 		A358373916AA3B060041E372 /* SBConnectionString.h in Headers */ = {isa = PBXBuildFile; fileRef = A358371616AA39850041E372 /* SBConnectionString.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -60,14 +60,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		906E403616A86A3200817A11 /* CopyFiles */ = {
+		906E403616A86A3200817A11 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
-				906E406216A86E4300817A11 /* WindowsAzureMessaging.h in CopyFiles */,
+				906E406216A86E4300817A11 /* WindowsAzureMessaging.h in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -216,7 +217,7 @@
 			buildPhases = (
 				906E403416A86A3200817A11 /* Sources */,
 				906E403516A86A3200817A11 /* Frameworks */,
-				906E403616A86A3200817A11 /* CopyFiles */,
+				906E403616A86A3200817A11 /* Copy Files */,
 				906E406416A8710700817A11 /* Headers */,
 				906E406016A86CAE00817A11 /* Prepare Framework */,
 			);
@@ -269,7 +270,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n\n# Link the \"Current\" version to \"A\"\n/bin/ln -sfh A \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/Current\"\n/bin/ln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Headers\"\n/bin/ln -sfh \"Versions/Current/${PRODUCT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/${PRODUCT_NAME}\"\n\n# The -a ensures that the headers maintain the source modification date so that we don't constantly\n# cause propagating rebuilds of files that import these headers.\n/bin/cp -a \"${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"";
+			shellScript = "set -e\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n\n# Link the \"Current\" version to \"A\"\n/bin/ln -sfh A \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/Current\"\n/bin/ln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Headers\"\n/bin/ln -sfh \"Versions/Current/${PRODUCT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/${PRODUCT_NAME}\"\n\n# The -a ensures that the headers maintain the source modification date so that we don't constantly\n# cause propagating rebuilds of files that import these headers.\n/bin/cp -a \"${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n";
 		};
 		906E407316A8853F00817A11 /* Build other platforms */ = {
 			isa = PBXShellScriptBuildPhase;

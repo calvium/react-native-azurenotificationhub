@@ -20,7 +20,7 @@ RCT_EXTERN NSString *const RCTErrorUnspecified;
 
 // Events
 NSString *const RCTLocalNotificationReceived                    = @"LocalNotificationReceived";
-NSString *const RCTRemoteNotificationReceived                   = @"RemoteNotificationReceived";
+NSString *const kRCTRemoteNotificationReceived                   = @"RemoteNotificationReceived";
 NSString *const RCTRemoteNotificationsRegistered                = @"RemoteNotificationsRegistered";
 NSString *const RCTAzureNotificationHubRegistered               = @"AzureNotificationHubRegistered";
 NSString *const RCTRegisterUserNotificationSettings             = @"RegisterUserNotificationSettings";
@@ -96,11 +96,16 @@ static NSDictionary *RCTFormatLocalNotification(UILocalNotification *notificatio
     return formattedLocalNotification;
 }
 
-RCT_EXPORT_MODULE()
+RCT_EXPORT_MODULE();
 
 - (dispatch_queue_t)methodQueue
 {
     return dispatch_get_main_queue();
+}
+
++ (BOOL)requiresMainQueueSetup
+{
+    return NO;
 }
 
 - (void)startObserving
@@ -112,7 +117,7 @@ RCT_EXPORT_MODULE()
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleRemoteNotificationReceived:)
-                                                 name:RCTRemoteNotificationReceived
+                                                 name:kRCTRemoteNotificationReceived
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -191,7 +196,7 @@ RCT_EXPORT_MODULE()
 
 + (void)didReceiveRemoteNotification:(NSDictionary *)notification
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:RCTRemoteNotificationReceived
+    [[NSNotificationCenter defaultCenter] postNotificationName:kRCTRemoteNotificationReceived
                                                         object:self
                                                       userInfo:notification];
 }

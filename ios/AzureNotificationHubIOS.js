@@ -216,12 +216,12 @@ class AzureNotificationHubIOS {
    */
   static addEventListener(type: PushNotificationEventName, handler: Function) {
     invariant(
-      type === 'notification' || type === 'register' || type === 'registrationError' || 
-      type === 'registerAzureNotificationHub' || type === 'azureNotificationHubRegistrationError' || type === 'localNotification',
-      'AzureNotificationHubIOS only supports `notification`, `register`, `registrationError`, `registerAzureNotificationHub`, `azureNotificationHubRegistrationError` and `localNotification` events'
+      type === 'remoteNotificationReceived' || type === 'register' || type === 'registrationError' ||
+      type === 'azureNotificationHubRegistered' || type === 'azureNotificationHubRegistrationError' || type === 'localNotification',
+      'AzureNotificationHubIOS only supports `remoteNotificationReceived`, `register`, `registrationError`, `azureNotificationHubRegistered`, `azureNotificationHubRegistrationError` and `localNotification` events'
     );
     var listener;
-    if (type === 'notification') {
+    if (type === 'remoteNotificationReceived') {
       listener =  PushNotificationEmitter.addListener(
         DEVICE_NOTIF_EVENT,
         (notifData) => {
@@ -249,7 +249,7 @@ class AzureNotificationHubIOS {
           handler(errorInfo);
         }
       );
-    } else if (type === 'registerAzureNotificationHub') {
+    } else if (type === 'azureNotificationHubRegistered') {
       listener = PushNotificationEmitter.addListener(
         NOTIF_REGISTER_AZURE_HUB_EVENT,
         (registrationInfo) => {
@@ -273,9 +273,9 @@ class AzureNotificationHubIOS {
    */
   static removeEventListener(type: PushNotificationEventName, handler: Function) {
     invariant(
-      type === 'notification' || type === 'register' || type === 'registrationError' || 
-      type === 'registerAzureNotificationHub' || type === 'azureNotificationHubRegistrationError' || type === 'localNotification',
-      'AzureNotificationHubIOS only supports `notification`, `register`, `registrationError`, `registerAzureNotificationHub`, `azureNotificationHubRegistrationError` and `localNotification` events'
+      type === 'remoteNotificationReceived' || type === 'register' || type === 'registrationError' ||
+      type === 'azureNotificationHubRegistered' || type === 'azureNotificationHubRegistrationError' || type === 'localNotification',
+      'AzureNotificationHubIOS only supports `remoteNotificationReceived`, `register`, `registrationError`, `azureNotificationHubRegistered`, `azureNotificationHubRegistrationError` and `localNotification` events'
     );
     var listener = _notifHandlers.get(handler);
     if (!listener) {

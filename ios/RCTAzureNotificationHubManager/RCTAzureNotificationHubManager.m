@@ -20,7 +20,7 @@ RCT_EXTERN NSString *const RCTErrorUnspecified;
 
 // Events
 NSString *const RCTLocalNotificationReceived                    = @"LocalNotificationReceived";
-NSString *const kRCTRemoteNotificationReceived                   = @"RemoteNotificationReceived";
+NSString *const kRCTRemoteNotificationReceived                  = @"RemoteNotificationReceived";
 NSString *const RCTRemoteNotificationsRegistered                = @"RemoteNotificationsRegistered";
 NSString *const RCTAzureNotificationHubRegistered               = @"AzureNotificationHubRegistered";
 NSString *const RCTRegisterUserNotificationSettings             = @"RegisterUserNotificationSettings";

@@ -107,6 +107,7 @@ public class ReactNativeNotificationHubModule extends ReactContextBaseJavaModule
         Intent intent = new Intent(reactContext, ReactNativeRegistrationIntentService.class);
         reactContext.startService(intent);
         NotificationsManager.handleNotifications(reactContext, senderID, ReactNativeNotificationsHandler.class);
+        promise.resolve(null);
     }
 
     @ReactMethod
@@ -129,7 +130,9 @@ public class ReactNativeNotificationHubModule extends ReactContextBaseJavaModule
             NotificationsManager.stopHandlingNotifications(reactContext);
         } catch (Exception e) {
             promise.reject(ERROR_NOTIFICATION_HUB, e);
+            return;
         }
+        promise.resolve(null);
     }
 
     @Override

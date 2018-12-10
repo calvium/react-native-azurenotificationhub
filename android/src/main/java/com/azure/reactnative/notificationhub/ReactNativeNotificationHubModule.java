@@ -121,6 +121,7 @@ public class ReactNativeNotificationHubModule extends ReactContextBaseJavaModule
 
         if (connectionString == null || hubName == null || registrationId == null) {
             promise.reject(ERROR_NOT_REGISTERED, "No registration to Azure Notification Hub.");
+            return;
         }
 
         NotificationHub hub = new NotificationHub(hubName, connectionString, reactContext);

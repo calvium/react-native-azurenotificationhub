@@ -62,16 +62,19 @@ public class ReactNativeNotificationHubModule extends ReactContextBaseJavaModule
         String connectionString = config.getString("connectionString");
         if (connectionString == null) {
             promise.reject(ERROR_INVALID_ARGUMENTS, "Connection string cannot be null.");
+            return;
         }
 
         String hubName = config.getString("hubName");
         if (hubName == null) {
             promise.reject(ERROR_INVALID_ARGUMENTS, "Hub name cannot be null.");
+            return;
         }
 
         String senderID = config.getString("senderID");
         if (senderID == null) {
             promise.reject(ERROR_INVALID_ARGUMENTS, "Sender ID cannot be null.");
+            return;
         }
 
         String[] tags = null;

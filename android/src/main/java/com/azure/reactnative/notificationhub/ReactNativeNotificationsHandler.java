@@ -1,11 +1,6 @@
 package com.azure.reactnative.notificationhub;
 
-import android.app.AlarmManager;
-import android.app.Application;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import android.app.*;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -22,6 +17,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.HeadlessJsTaskService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +25,7 @@ import org.json.JSONObject;
 
 import com.microsoft.windowsazure.notifications.NotificationsHandler;
 
+import java.util.List;
 import java.util.Set;
 
 public class ReactNativeNotificationsHandler extends NotificationsHandler {
@@ -42,8 +39,54 @@ public class ReactNativeNotificationsHandler extends NotificationsHandler {
     @Override
     public void onReceive(Context context, Bundle bundle) {
         this.context = context;
+        if (!isAppOnForeground(context)) {
+            runBackgroundTask(context, bundle);
+        }
         sendNotification(bundle);
-sendBroadcast(context, bundle, 0);
+        sendBroadcast(context, bundle, 0);
+    }
+
+    private void runBackgroundTask(Context context, Bundle bundle) {
+        this.context = context;
+        String taskName = NotificationHubUtil.getInstance().getBackgroundTaskName(context);
+        Log.i(TAG, "Got a notification to run with background task " + taskName);
+        if (taskName != null) {
+            Log.i(TAG, "Got a notification to run with background task " + taskName);
+            sendToBackground(context, bundle, taskName);
+        } else {
+            Log.d(TAG, "No task name");
+        }
+    }
+
+    private void sendToBackground(Context context, final Bundle bundle, final String taskName) {
+        HeadlessJsTaskService.acquireWakeLockNow(context);
+        Intent service = new Intent(context, ReactNativeBackgroundNotificationService.class);
+        Bundle serviceBundle = new Bundle(bundle);
+        serviceBundle.putString("taskName", taskName);
+        service.putExtras(serviceBundle);
+        context.startService(service);
+    }
+
+    private boolean isAppOnForeground(Context context) {
+        /**
+         We need to check if app is in foreground otherwise the app will crash.
+         http://stackoverflow.com/questions/8489993/check-android-application-is-in-foreground-or-not
+         **/
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> appProcesses =
+                activityManager.getRunningAppProcesses();
+        if (appProcesses == null) {
+            return false;
+        }
+        final String packageName = context.getPackageName();
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            if (appProcess.importance ==
+                    ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND &&
+                    appProcess.processName.equals(packageName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void sendBroadcast(final Context context, final Bundle bundle, final long delay) {

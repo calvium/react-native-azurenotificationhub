@@ -17,6 +17,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 import com.microsoft.windowsazure.messaging.NotificationHub;
+// TODO: review this like below
 import com.microsoft.windowsazure.notifications.NotificationsManager;
 
 import com.facebook.react.bridge.Promise;
@@ -120,6 +121,7 @@ public class ReactNativeNotificationHubModule extends ReactContextBaseJavaModule
 
         Intent intent = new Intent(reactContext, ReactNativeRegistrationIntentService.class);
         reactContext.startService(intent);
+        // TODO: review line below
         NotificationsManager.handleNotifications(reactContext, senderID, ReactNativeNotificationsHandler.class);
         promise.resolve(null);
     }
@@ -142,7 +144,6 @@ public class ReactNativeNotificationHubModule extends ReactContextBaseJavaModule
         try {
             hub.unregister();
             notificationHubUtil.setRegistrationID(reactContext, null);
-            NotificationsManager.stopHandlingNotifications(reactContext);
         } catch (Exception e) {
             promise.reject(ERROR_NOTIFICATION_HUB, e);
             return;

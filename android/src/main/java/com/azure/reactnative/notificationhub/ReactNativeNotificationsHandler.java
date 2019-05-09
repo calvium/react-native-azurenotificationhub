@@ -29,7 +29,8 @@ import java.util.List;
 import java.util.Set;
 
 public class ReactNativeNotificationsHandler extends NotificationsHandler {
-    public static final String TAG = "ReactNativeNotificationsHandler";
+    public static final String TAG = "ReactNativeNotification";
+
     private static final String NOTIFICATION_CHANNEL_ID = "rn-push-notification-channel-id";
     private static final String CHANNEL_ID = "channel_01";
     private static final long DEFAULT_VIBRATION = 300L;
@@ -92,8 +93,7 @@ public class ReactNativeNotificationsHandler extends NotificationsHandler {
     public void sendBroadcast(final Context context, final Bundle bundle, final long delay) {
         (new Thread() {
             public void run() {
-                try
-                {
+                try {
                     Thread.currentThread().sleep(delay);
         JSONObject json = new JSONObject();
         Set<String> keys = bundle.keySet();
@@ -142,7 +142,7 @@ public class ReactNativeNotificationsHandler extends NotificationsHandler {
                 return;
             }
 
-            String notificationIdString = bundle.getString("id");
+            String notificationIdString = bundle.getString("google.message_id");
             if (notificationIdString == null) {
                 Log.e(TAG, "No notification ID specified for the notification");
                 return;
@@ -267,7 +267,7 @@ public class ReactNativeNotificationsHandler extends NotificationsHandler {
                 }
             }
 
-            int notificationID = Integer.parseInt(notificationIdString);
+            int notificationID = notificationIdString.hashCode();
 
             PendingIntent pendingIntent = PendingIntent.getActivity(context, notificationID, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
@@ -335,6 +335,7 @@ public class ReactNativeNotificationsHandler extends NotificationsHandler {
     }
 
     private static boolean channelCreated = false;
+
     private static void checkOrCreateChannel(NotificationManager manager) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
             return;

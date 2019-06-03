@@ -316,15 +316,15 @@ public class ReactNativeNotificationsHandler extends NotificationsHandler {
                 }
             }
 
-            Notification info = notification.build();
-            info.defaults |= Notification.DEFAULT_LIGHTS;
-
-            if (bundle.containsKey("tag")) {
-                String tag = bundle.getString("tag");
-                notificationManager.notify(tag, notificationID, info);
-            } else {
-                notificationManager.notify(notificationID, info);
-            }
+            // Notification info = notification.build();
+            // info.defaults |= Notification.DEFAULT_LIGHTS;
+            //
+            // if (bundle.containsKey("tag")) {
+            //     String tag = bundle.getString("tag");
+            //     notificationManager.notify(tag, notificationID, info);
+            // } else {
+            //     notificationManager.notify(notificationID, info);
+            // }
         } catch (Exception e) {
             Log.e(TAG, "failed to send push notification", e);
         }
